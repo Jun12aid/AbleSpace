@@ -1,0 +1,11 @@
+import api from "../lib/axios";
+
+export const fetchTasks = () =>
+  api.get("/tasks").then(res => res.data);
+
+export const createTask = (data) =>
+  api.post("/tasks", data).then(res => res.data);
+
+export const updateTask = ({ id, data }) =>
+  api.put(`/tasks/${id}`, data).then(res => res.data);
+
