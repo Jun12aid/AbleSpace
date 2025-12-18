@@ -18,7 +18,7 @@ export default function Login() {
     onSuccess: async () => {
       // 🔴 force refetch of /auth/me
       await queryClient.invalidateQueries(["me"]);
-      navigate("/dashboard");
+      
     },
   });
 
