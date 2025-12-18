@@ -8,7 +8,6 @@ const userRoutes = require('./modules/user/user.routes.js');
 const app = express();
 
 // Middleware
-constconst cors = require("cors");
 
 const allowedOrigins = [
   "http://localhost:5173",
