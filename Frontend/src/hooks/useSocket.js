@@ -1,21 +1,18 @@
-import { socket } from "../lib/socket";
+import { io } from "socket.io-client";
 import { useEffect } from "react";
-import { useAuth } from "./useAuth";
+
+let socket;
 
 export const useSocket = () => {
-  const { data: user } = useAuth();
-
   useEffect(() => {
-    if (!user) return;
+    const API_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 
-    socket.emit("join", user._id);
-
-    socket.on("taskAssigned", (task) => {
-      alert(`New task assigned: ${task.title}`);
+    socket = io(API_URL, {
+      withCredentials: true,
     });
 
     return () => {
-      socket.off("taskAssigned");
+      socket?.disconnect();
     };
-  }, [user]);
+  }, []);
 };
