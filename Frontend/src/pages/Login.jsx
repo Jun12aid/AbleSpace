@@ -1,8 +1,7 @@
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { loginUser } from "../api/auth.api";
-import { useNavigate } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -15,20 +14,19 @@ export default function Login() {
   } = useForm();
 
   const mutation = useMutation({
-  mutationFn: loginUser,
-  onSuccess: async () => {
-    // 🔴 force refetch of /auth/me
-    await queryClient.invalidateQueries(["me"]);
-    navigate("/dashboard");
-  },
-});
+    mutationFn: loginUser,
+    onSuccess: async () => {
+      // 🔴 force refetch of /auth/me
+      await queryClient.invalidateQueries(["me"]);
+      navigate("/dashboard");
+    },
+  });
 
   const onSubmit = (data) => {
     mutation.mutate(data);
   };
 
   return (
-    // console.log("login render"),
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -69,6 +67,17 @@ export default function Login() {
         >
           {mutation.isLoading ? "Logging in..." : "Login"}
         </button>
+
+        {/* 🔹 REGISTER LINK */}
+        <p className="text-sm text-center mt-4">
+          Don’t have an account?{" "}
+          <Link
+            to="/register"
+            className="text-blue-600 font-medium hover:underline"
+          >
+            Register
+          </Link>
+        </p>
       </form>
     </div>
   );
