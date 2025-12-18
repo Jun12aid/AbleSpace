@@ -10,7 +10,7 @@ const app = express();
 // Middleware
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://able-space-1995kzec2-junaid-shaikhs-projects-a5f3dbdd.vercel.app",
+  "https://able-space-1995kzec2-junaid-shaikhs-projects-a5f3dbdd.vercel.app,
 ];
 
 app.use(
