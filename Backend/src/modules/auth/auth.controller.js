@@ -11,9 +11,10 @@ exports.login = async (req, res) => {
   const { user, token } = await login({ email, password });
 
   res.cookie("token", token, {
-    httpOnly: true,
-    sameSite: "lax",
-  });
+  httpOnly: true,
+  sameSite: "none", // ✅ REQUIRED for Vercel ↔ Render
+  secure: true,     // ✅ REQUIRED for HTTPS
+});
 
   res.json(user);
 };
