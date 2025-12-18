@@ -8,10 +8,26 @@ const userRoutes = require('./modules/user/user.routes.js');
 const app = express();
 
 // Middleware
-app.use(cors({
-    origin: 'http://localhost:5173',
-    credentials: true
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://able-space-1995kzec2-junaid-shaikhs-projects-a5f3dbdd.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps, curl)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
 app.use(express.json());
 app.use(cookieParser());
 
