@@ -1,4 +1,4 @@
-import { TASK_PRIORITY, TASK_STATUS } from "../types/task";
+import { TASK_PRIORITY, TASK_STATUS } from "../Types/task";
 
 export default function Filters({ filters, setFilters }) {
   return (
