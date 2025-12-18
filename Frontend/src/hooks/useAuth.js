@@ -1,10 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { getProfile } from "../api/auth.api";
+import api from "../lib/axios";
 
 export const useAuth = () => {
-  return useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["me"],
-    queryFn: getProfile,
+    queryFn: () =>
+      api.get("/auth/me").then((res) => res.data),
     retry: false,
   });
+
+  return {
+    user: data,
+    isLoading,
+  };
 };
