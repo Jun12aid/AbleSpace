@@ -14,13 +14,16 @@ export default function Login() {
   } = useForm();
 
   const mutation = useMutation({
-    mutationFn: loginUser,
-    onSuccess: async () => {
-      // 🔴 force refetch of /auth/me
-      await queryClient.invalidateQueries(["me"]);
-      
-    },
-  });
+  mutationFn: loginUser,
+  onSuccess: async () => {
+    // wait for cookie + user fetch
+    await queryClient.invalidateQueries(["me"]);
+
+    // 🔥 FORCE redirect
+    navigate("/dashboard", { replace: true });
+  },
+});
+
 
   const onSubmit = (data) => {
     mutation.mutate(data);
